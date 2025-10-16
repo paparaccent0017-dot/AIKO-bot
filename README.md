@@ -1,2 +1,0 @@
-# AIKO-bot.
-# AIKO-bot.
