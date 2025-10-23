@@ -1,6 +1,6 @@
 import asyncio
 import random
-from aiogram import Bot, Dispatcher, types
+from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import CommandStart
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
@@ -149,11 +149,16 @@ async def start_handler(message: types.Message):
         bg_task_started = True
 
 
-@dp.callback_query(lambda c: c.data == "new_compliment")
+@dp.callback_query(F.data == "new_compliment")
 async def new_compliment(callback: types.CallbackQuery):
+    # ⚡️ Защита от старых нажатий кнопки
+    try:
+        await callback.answer("❤️")
+    except Exception:
+        return
+
     compliment = get_new_compliment()
     await callback.message.answer(compliment, reply_markup=compliment_keyboard())
-    await callback.answer()
 
 
 async def send_compliments():
