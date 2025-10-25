@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "aiko-bot"
+version = "0.1.0"
+description = "Telegram compliment bot"
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "3.10.*"
+aiogram = "3.3.0"
+aiohttp = "3.9.3"
+aiofiles = "23.2.1"
+pydantic = "2.5.0"
+typing-extensions = "4.9.0"
+certifi = "*"
+magic-filter = "1.0.12"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
