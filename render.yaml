@@ -3,4 +3,4 @@ services:
     name: aiko
     env: python
     buildCommand: pip install --upgrade pip && pip install -r requirements.txt
-    startCommand: python main.py
+    startCommand: python AIKO.py
