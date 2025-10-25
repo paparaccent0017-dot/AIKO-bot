@@ -1,1 +1,1 @@
-worker: python3 AIKO.py
+web: python web.py
