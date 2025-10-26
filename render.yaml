@@ -5,6 +5,8 @@ services:
     plan: free
     buildCommand: |
       apt-get update && apt-get install -y gcc
+      pyenv install 3.10.13
+      pyenv global 3.10.13
       pip install --upgrade pip
       pip install -r requirements.txt
     startCommand: python AIKO.py
