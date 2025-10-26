@@ -4,9 +4,8 @@ services:
     env: python
     plan: free
     buildCommand: |
-      apt-get update && apt-get install -y python3.10 python3.10-venv python3.10-dev
-      python3.10 -m venv venv
-      . venv/bin/activate
+      apt-get update && apt-get install -y gcc
       pip install --upgrade pip
+      pip install aiohttp==3.9.5
       pip install -r requirements.txt
-    startCommand: venv/bin/python AIKO.py
+    startCommand: python AIKO.py
