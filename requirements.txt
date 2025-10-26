@@ -1,8 +1,5 @@
-pip==25.1.1
-setuptools
-wheel
+pydantic==2.5.3
 aiogram==3.3.0
 aiohttp==3.9.3
 aiofiles==23.2.1
-Flask
-pydantic==2.5.3
+Flask==3.1.2
