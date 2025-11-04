@@ -1,16 +1,20 @@
 import asyncio
+import os
 import random
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import CommandStart
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-TOKEN = "7597447766:AAHEz4t9uzncsd645pXggSRHK6KL8Ygb8kA"
+# 🔐 Токен теперь берётся из переменной окружения
+TOKEN = os.getenv("BOT_TOKEN")
+
+# 👥 Кому бот шлёт сообщения каждые 2 часа
 RECIPIENTS = [8152858653, 1179941186]
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
-# 💬 100 поддерживающих, тёплых фраз
+# 💬 Список фраз (оставлен без изменений)
 compliments = [
     "Котя Ты не одна, я всегда рядом ❤️",
     "помнишь как я хотел оторвать скотч от твоей груди,и ты такая: лапаешь меня?)) ❤️",
@@ -121,12 +125,10 @@ bg_task_started = False
 def get_new_compliment():
     global used_indices
     available = [i for i in range(len(compliments)) if i not in used_indices]
-
     if not available:
         used_indices = set()
         random.shuffle(compliments)
         available = list(range(len(compliments)))
-
     idx = random.choice(available)
     used_indices.add(idx)
     return compliments[idx]
@@ -151,7 +153,6 @@ async def start_handler(message: types.Message):
 
 @dp.callback_query(F.data == "new_compliment")
 async def new_compliment(callback: types.CallbackQuery):
-    # ⚡️ Защита от старых нажатий кнопки
     try:
         await callback.answer("❤️")
     except Exception:
@@ -170,10 +171,13 @@ async def send_compliments():
                 await bot.send_message(user_id, compliment, reply_markup=compliment_keyboard())
             except Exception as e:
                 print(f"Ошибка при отправке {user_id}: {e}")
-        await asyncio.sleep(2 * 60 * 60)  # каждые 2 часа
+        await asyncio.sleep(2 * 60 * 60)
 
 
 async def main():
+    if not TOKEN:
+        print("❌ Ошибка: BOT_TOKEN не найден. Добавь его в переменные окружения.")
+        return
     await dp.start_polling(bot)
 
 
